@@ -14,7 +14,7 @@ class Question(BaseModel):
     num: int
     option: Optional[str] = None
     sub_division: Optional[str] = None
-    co: "Co"
+    co: int
     total_mark: int
     obtained_mark: int
 
@@ -24,7 +24,7 @@ class Question(BaseModel):
             num=int(qp_parsed_question["no"]),
             option=qp_parsed_question["option"] if qp_parsed_question["option"] is not None else None,
             sub_division=qp_parsed_question["subDivision"] if qp_parsed_question.get("subDivision") is not None else None,
-            co=Co(num=int(qp_parsed_question["co"])),
+            co=int(qp_parsed_question["co"]),
             total_mark=int(qp_parsed_question["marks"]),
             obtained_mark=0  # Assuming obtained_mark is set elsewhere
         )
