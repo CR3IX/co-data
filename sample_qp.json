@@ -1,3 +1,165 @@
 {
-    
+    "message": "Parse Questions from Question Paper",
+    "questions": [
+        {
+            "pi": null,
+            "co": "2",
+            "bl": "2",
+            "marks": "2",
+            "question": "Differentiate Top down parser and bottom up parser.",
+            "option": null,
+            "subDivision": null,
+            "no": "1"
+        },
+        {
+            "pi": null,
+            "co": "2",
+            "bl": "1",
+            "marks": "2",
+            "question": "Define Handle. What do you mean by Handle Pruning?",
+            "option": null,
+            "subDivision": null,
+            "no": "2"
+        },
+        {
+            "pi": null,
+            "co": "2",
+            "bl": "1",
+            "marks": "2",
+            "question": "Name the various conflicts that occur during shift reduce parsing.",
+            "option": null,
+            "subDivision": null,
+            "no": "3"
+        },
+        {
+            "pi": null,
+            "co": "2",
+            "bl": "1",
+            "marks": "2",
+            "question": "Define LR (0) items.",
+            "option": null,
+            "subDivision": null,
+            "no": "4"
+        },
+        {
+            "pi": null,
+            "co": "2",
+            "bl": "1",
+            "marks": "2",
+            "question": "Give the structure for YACC program.",
+            "option": null,
+            "subDivision": null,
+            "no": "5"
+        },
+        {
+            "pi": null,
+            "co": "3",
+            "bl": "2",
+            "marks": "2",
+            "question": "Translate the expression a: =b*-c+b*- c into syntax tree.",
+            "option": null,
+            "subDivision": null,
+            "no": "6"
+        },
+        {
+            "pi": null,
+            "co": "3",
+            "bl": "1",
+            "marks": "2",
+            "question": "Write short notes on Annotated Parse Tree.",
+            "option": null,
+            "subDivision": null,
+            "no": "7"
+        },
+        {
+            "pi": null,
+            "co": "3",
+            "bl": "1",
+            "marks": "2",
+            "question": "Outline Synthesized and Inherited Attributes.",
+            "option": null,
+            "subDivision": null,
+            "no": "8"
+        },
+        {
+            "pi": null,
+            "co": "3",
+            "bl": "2",
+            "marks": "2",
+            "question": "How to check structural equivalence of two type expressions?",
+            "option": null,
+            "subDivision": null,
+            "no": "9"
+        },
+        {
+            "pi": null,
+            "co": "2",
+            "bl": "3",
+            "marks": "10",
+            "question": "Generate SLR parsing table for the following grammar and parse the input id+id*id            E->E+T|T            T->T*F|F            F->(E)|id",
+            "option": "A",
+            "subDivision": null,
+            "no": "10"
+        },
+        {
+            "pi": null,
+            "co": "2",
+            "bl": "3",
+            "marks": "10",
+            "question": "Consider the following grammar G:           S->CC           C->cC|dConstruct LALR Parsing table for the grammar Show the moves of parser on the string ccd.",
+            "option": "B",
+            "subDivision": null,
+            "no": "10"
+        },
+        {
+            "pi": null,
+            "co": "3",
+            "bl": "2",
+            "marks": "10",
+            "question": "Define three-address code. Describe the various methods of implementing three-address statements with an example. Give the translation scheme for converting the assignments into three address code",
+            "option": "A",
+            "subDivision": null,
+            "no": "11"
+        },
+        {
+            "pi": null,
+            "co": "3",
+            "bl": "2",
+            "marks": "10",
+            "question": "Elaborate on specification of Simple type checker.",
+            "option": "B",
+            "subDivision": null,
+            "no": "11"
+        },
+        {
+            "pi": null,
+            "co": "3",
+            "bl": "3",
+            "marks": "8",
+            "question": "i)  Translate the following assignment statement into three address code using the translation scheme and represent as Syntax tree:A[i,j]=B[i,j]+2Given Array A,B is array of size 10 x10",
+            "option": "A",
+            "subDivision": "1",
+            "no": "12"
+        },
+        {
+            "pi": null,
+            "co": "3",
+            "bl": "2",
+            "marks": "4",
+            "question": "ii) Construct Syntax-Directed Translation scheme that translates arithmetic expression from infix into postfix notation.",
+            "option": "A",
+            "subDivision": "2",
+            "no": "12"
+        },
+        {
+            "pi": null,
+            "co": "3",
+            "bl": "3",
+            "marks": "12",
+            "question": "Generate intermediate code for the following code segment:(i)if (a > b)     x = a + b else     x = a − b where a , x and b of int type data(ii)int a,b; float c; a= 10; Switch (a) {case 10: c = 1;case 20: c = 2; }",
+            "option": "B",
+            "subDivision": null,
+            "no": "12"
+        }
+    ]
 }
