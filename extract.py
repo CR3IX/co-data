@@ -1,4 +1,5 @@
 import pandas as pd
+import json
 from models import *
 
 df = pd.read_excel("Compiler Design 2022-23 Even CO-PO attainment (1).xlsx", sheet_name='S2')
@@ -62,4 +63,20 @@ def populate_student_data(df: pd.DataFrame):
             print(e)
 
 populate_student_data(df)
-print(student_data[0].model_dump_json())
+
+def populate_questions_in_serial_test(question_paper_json_file_name: str):
+  with open(question_paper_json_file_name, "r") as f:
+    qp = json.load(f)
+    questions : List[Question] = []
+    for question in qp["questions"]:
+        questions.append(Question.from_parsed_question(question))
+
+    for student in student_data:
+        student.serial_tests[0].questions = questions
+
+# print(student_data[0].model_dump_json())
+
+populate_questions_in_serial_test("sample_qp.json")
+for student in student_data:
+    print(student.model_dump_json())
+    break
