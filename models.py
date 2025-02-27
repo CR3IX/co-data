@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 import pydantic
 
 class BaseModel(pydantic.BaseModel):
@@ -8,8 +8,8 @@ class Student(BaseModel):
     reg_no: str
     section: str
     name: str
-    serial_test: List["SerialTest"]
-    serial_test_with_questions: List["SerialTestWithQuestions"]
+    serial_test: Optional[List["SerialTest"]] = None
+    serial_test_with_questions: Optional[List["SerialTestWithQuestions"]] = None
 
 class SerialTestWithQuestions(BaseModel):
     questions: List["Question"]
