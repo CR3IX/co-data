@@ -8,10 +8,11 @@ class Student(BaseModel):
     reg_no: str
     section: str
     name: str
-    serial_test: Optional[List["SerialTest"]] = None
-    serial_test_with_questions: Optional[List["SerialTestWithQuestions"]] = None
+    serial_tests: Optional[List["SerialTest"]] = None
+    serial_tests_with_questions: Optional[List["SerialTestWithQuestions"]] = None
 
 class SerialTestWithQuestions(BaseModel):
+    num: int
     questions: List["Question"]
 
 class Question(BaseModel):
@@ -23,6 +24,7 @@ class Question(BaseModel):
     obtained_mark: int
 
 class SerialTest(BaseModel):
+    num: int
     co: List["Co"]
 
 class Co(BaseModel):
