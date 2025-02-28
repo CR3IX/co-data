@@ -1,25 +1,28 @@
 import pandas as pd
 import json
 from models import *
+from copy import deepcopy
 
-df = pd.read_excel("Compiler Design 2022-23 Even CO-PO attainment (1).xlsx", sheet_name='S2')
 student_data: List[Student] = []
 
 headers = ["Sno", "Reg. Number", "Section", "Name"]
 total_co = 6
 
+
 def get_all_co(df):
     return df.filter(like='co').iloc[:, :total_co * 3]
+
 
 def get_student_co_marks(df: pd.DataFrame, index: int):
     all_co = get_all_co(df)
     return all_co.iloc[index, :]
 
+
 def get_total_mark_co(df: pd.DataFrame, index: int):
     try:
         row = get_student_co_marks(df, 0)
         return int(row[index])
-    except:
+    except BaseException:
         return 0
 
 
@@ -33,9 +36,9 @@ def populate_student_data(df: pd.DataFrame):
 
         student_co_marks = get_student_co_marks(df, index)
         try:
-            cos : List[Co] = []
-            serial_tests : List[SerialTest] = []
-            
+            cos: List[Co] = []
+            serial_tests: List[SerialTest] = []
+
             cos = []
             col_num = 0
             for col_name, value in student_co_marks.items():
@@ -62,21 +65,19 @@ def populate_student_data(df: pd.DataFrame):
         except Exception as e:
             print(e)
 
-populate_student_data(df)
 
-def populate_questions_in_serial_test(question_paper_json_file_name: str):
-  with open(question_paper_json_file_name, "r") as f:
-    qp = json.load(f)
-    questions : List[Question] = []
-    for question in qp["questions"]:
-        questions.append(Question.from_parsed_question(question))
+def populate_questions_in_serial_test(question_paper_json_file_name: str, serial_test_index: int):
+    with open(question_paper_json_file_name, "r") as f:
+        qp = json.load(f)
+        base_questions = [Question.from_parsed_question(question) for question in qp["questions"]]
 
-    for student in student_data:
-        student.serial_tests[0].questions = questions
+        for student in student_data:
+            # Create a deep copy of questions for each student
+            student.serial_tests[serial_test_index].questions = deepcopy(base_questions)
 
-# print(student_data[0].model_dump_json())
 
-populate_questions_in_serial_test("sample_qp.json")
-for student in student_data:
-    print(student.model_dump_json())
-    break
+def populate_student_data_and_questions(df: pd.DataFrame, question_paper_json_file_name: str):
+    populate_student_data(df)
+    populate_questions_in_serial_test(question_paper_json_file_name, 1)
+
+    return student_data
