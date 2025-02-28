@@ -69,7 +69,7 @@ def populate_student_data(df: pd.DataFrame):
 def populate_questions_in_serial_test(question_paper_json_file_name: str, serial_test_index: int):
     with open(question_paper_json_file_name, "r") as f:
         qp = json.load(f)
-        base_questions = [Question.from_parsed_question(question) for question in qp["questions"]]
+        base_questions = [Question.from_parsed_question(question) for question in qp["questions"][serial_test_index]]
 
         for student in student_data:
             # Create a deep copy of questions for each student
@@ -78,6 +78,8 @@ def populate_questions_in_serial_test(question_paper_json_file_name: str, serial
 
 def populate_student_data_and_questions(df: pd.DataFrame, question_paper_json_file_name: str):
     populate_student_data(df)
-    populate_questions_in_serial_test(question_paper_json_file_name, 1)
+
+    for i in range(len(student_data[0].serial_tests)):
+        populate_questions_in_serial_test(question_paper_json_file_name, i)
 
     return student_data

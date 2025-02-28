@@ -114,10 +114,10 @@ def populate_student_co_marks(questions: List[Question], co: Co):
 
 
 for student in student_data:
-
-    for co in student.serial_tests[1].co:
-        if co and co.obtained_mark and co.obtained_mark > 0:
-            populate_student_co_marks(student.serial_tests[1].questions, co)
+    for serial_test in student.serial_tests:
+        for co in serial_test.co:
+            if co and co.obtained_mark and co.obtained_mark > 0:
+                populate_student_co_marks(serial_test.questions, co)
 
 f = open("temp.json", "w")
 
