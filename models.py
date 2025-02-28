@@ -1,6 +1,6 @@
 from typing import List, Optional
 import pydantic
-
+import pandas as pd
 
 class BaseModel(pydantic.BaseModel):
     pass

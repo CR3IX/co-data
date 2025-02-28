@@ -82,6 +82,21 @@ def get_total_questions_mark(questions: List[Question]) -> int:
     return sum([question.total_mark for question in questions])
 
 
+def convert_to_dataframe(student: Student) -> pd.DataFrame:
+    expanded_data = {
+        "reg_no": student.reg_no,
+        "section": student.section,
+        "name": student.name,
+    }
+
+    for serial_test in student.serial_tests or []:
+        for question in serial_test.questions or []:
+            question_key = f"serial_test_{serial_test.num}_q_{question.num}{'_' + question.option if question.option else ''}{'_' + question.sub_division if question.sub_division else ''}{'_' + str(question.total_mark) + 'marks'}"
+            expanded_data[question_key] = question.obtained_mark
+
+    return expanded_data
+
+
 def populate_student_co_marks(questions: List[Question], co: Co):
     co_questions = get_co_questions(questions, co)
 
@@ -109,3 +124,6 @@ f = open("temp.json", "w")
 student_data_json = [student.model_dump() for student in student_data]
 f.write(json.dumps(student_data_json[:10], indent=4))
 f.close()
+
+df = pd.DataFrame([convert_to_dataframe(student) for student in student_data])
+df.to_excel("student_data.xlsx", index=False)
