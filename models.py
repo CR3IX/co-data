@@ -1,14 +1,17 @@
 from typing import List, Optional
 import pydantic
 
+
 class BaseModel(pydantic.BaseModel):
     pass
+
 
 class Student(BaseModel):
     reg_no: str
     section: str
     name: str
     serial_tests: Optional[List["SerialTest"]] = None
+
 
 class Question(BaseModel):
     num: int
@@ -29,13 +32,14 @@ class Question(BaseModel):
             obtained_mark=0  # Assuming obtained_mark is set elsewhere
         )
 
+
 class SerialTest(BaseModel):
     num: int
     co: List["Co"]
     questions: Optional[List["Question"]] = None
 
+
 class Co(BaseModel):
     num: int
     total_mark: Optional[int] = None
     obtained_mark: Optional[int] = None
-    
