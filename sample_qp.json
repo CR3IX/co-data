@@ -1,165 +1,511 @@
 {
-    "message": "Parse Questions from Question Paper",
+    "message": "Parsed questions from uploaded question papers",
     "questions": [
-        {
-            "pi": null,
-            "co": "2",
-            "bl": "2",
-            "marks": "2",
-            "question": "Differentiate Top down parser and bottom up parser.",
-            "option": null,
-            "subDivision": null,
-            "no": "1"
-        },
-        {
-            "pi": null,
-            "co": "2",
-            "bl": "1",
-            "marks": "2",
-            "question": "Define Handle. What do you mean by Handle Pruning?",
-            "option": null,
-            "subDivision": null,
-            "no": "2"
-        },
-        {
-            "pi": null,
-            "co": "2",
-            "bl": "1",
-            "marks": "2",
-            "question": "Name the various conflicts that occur during shift reduce parsing.",
-            "option": null,
-            "subDivision": null,
-            "no": "3"
-        },
-        {
-            "pi": null,
-            "co": "2",
-            "bl": "1",
-            "marks": "2",
-            "question": "Define LR (0) items.",
-            "option": null,
-            "subDivision": null,
-            "no": "4"
-        },
-        {
-            "pi": null,
-            "co": "2",
-            "bl": "1",
-            "marks": "2",
-            "question": "Give the structure for YACC program.",
-            "option": null,
-            "subDivision": null,
-            "no": "5"
-        },
-        {
-            "pi": null,
-            "co": "3",
-            "bl": "2",
-            "marks": "2",
-            "question": "Translate the expression a: =b*-c+b*- c into syntax tree.",
-            "option": null,
-            "subDivision": null,
-            "no": "6"
-        },
-        {
-            "pi": null,
-            "co": "3",
-            "bl": "1",
-            "marks": "2",
-            "question": "Write short notes on Annotated Parse Tree.",
-            "option": null,
-            "subDivision": null,
-            "no": "7"
-        },
-        {
-            "pi": null,
-            "co": "3",
-            "bl": "1",
-            "marks": "2",
-            "question": "Outline Synthesized and Inherited Attributes.",
-            "option": null,
-            "subDivision": null,
-            "no": "8"
-        },
-        {
-            "pi": null,
-            "co": "3",
-            "bl": "2",
-            "marks": "2",
-            "question": "How to check structural equivalence of two type expressions?",
-            "option": null,
-            "subDivision": null,
-            "no": "9"
-        },
-        {
-            "pi": null,
-            "co": "2",
-            "bl": "3",
-            "marks": "10",
-            "question": "Generate SLR parsing table for the following grammar and parse the input id+id*id            E->E+T|T            T->T*F|F            F->(E)|id",
-            "option": "A",
-            "subDivision": null,
-            "no": "10"
-        },
-        {
-            "pi": null,
-            "co": "2",
-            "bl": "3",
-            "marks": "10",
-            "question": "Consider the following grammar G:           S->CC           C->cC|dConstruct LALR Parsing table for the grammar Show the moves of parser on the string ccd.",
-            "option": "B",
-            "subDivision": null,
-            "no": "10"
-        },
-        {
-            "pi": null,
-            "co": "3",
-            "bl": "2",
-            "marks": "10",
-            "question": "Define three-address code. Describe the various methods of implementing three-address statements with an example. Give the translation scheme for converting the assignments into three address code",
-            "option": "A",
-            "subDivision": null,
-            "no": "11"
-        },
-        {
-            "pi": null,
-            "co": "3",
-            "bl": "2",
-            "marks": "10",
-            "question": "Elaborate on specification of Simple type checker.",
-            "option": "B",
-            "subDivision": null,
-            "no": "11"
-        },
-        {
-            "pi": null,
-            "co": "3",
-            "bl": "3",
-            "marks": "8",
-            "question": "i)  Translate the following assignment statement into three address code using the translation scheme and represent as Syntax tree:A[i,j]=B[i,j]+2Given Array A,B is array of size 10 x10",
-            "option": "A",
-            "subDivision": "1",
-            "no": "12"
-        },
-        {
-            "pi": null,
-            "co": "3",
-            "bl": "2",
-            "marks": "4",
-            "question": "ii) Construct Syntax-Directed Translation scheme that translates arithmetic expression from infix into postfix notation.",
-            "option": "A",
-            "subDivision": "2",
-            "no": "12"
-        },
-        {
-            "pi": null,
-            "co": "3",
-            "bl": "3",
-            "marks": "12",
-            "question": "Generate intermediate code for the following code segment:(i)if (a > b)     x = a + b else     x = a − b where a , x and b of int type data(ii)int a,b; float c; a= 10; Switch (a) {case 10: c = 1;case 20: c = 2; }",
-            "option": "B",
-            "subDivision": null,
-            "no": "12"
-        }
+        [
+            {
+                "pi": "1.2.1",
+                "co": "1",
+                "bl": "1",
+                "marks": "2",
+                "question": "Define the two parts of compilation.",
+                "option": null,
+                "subDivision": null,
+                "no": "1"
+            },
+            {
+                "pi": "1.2.2",
+                "co": "1",
+                "bl": "2",
+                "marks": "2",
+                "question": "Draw the transition diagram for relational operator.",
+                "option": null,
+                "subDivision": null,
+                "no": "2"
+            },
+            {
+                "pi": "1.2.1",
+                "co": "1",
+                "bl": "1",
+                "marks": "2",
+                "question": "Mention the role of lexical analyzer and its issues.",
+                "option": null,
+                "subDivision": null,
+                "no": "3"
+            },
+            {
+                "pi": "1.2.2",
+                "co": "1",
+                "bl": "2",
+                "marks": "2",
+                "question": "Differentiate between Lexeme,Token,pattern.",
+                "option": null,
+                "subDivision": null,
+                "no": "4"
+            },
+            {
+                "pi": "1.2.1",
+                "co": "1",
+                "bl": "1",
+                "marks": "2",
+                "question": "What are the various parts in LEX program?",
+                "option": null,
+                "subDivision": null,
+                "no": "5"
+            },
+            {
+                "pi": "1.2.1",
+                "co": "2",
+                "bl": "2",
+                "marks": "2",
+                "question": "Construct the syntax tree for the expression a=b*-c+b*-c",
+                "option": null,
+                "subDivision": null,
+                "no": "6"
+            },
+            {
+                "pi": "1.2.1",
+                "co": "2",
+                "bl": "1",
+                "marks": "2",
+                "question": "Define ambiguous grammar with an example.",
+                "option": null,
+                "subDivision": null,
+                "no": "7"
+            },
+            {
+                "pi": "1.2.1",
+                "co": "2",
+                "bl": "1",
+                "marks": "2",
+                "question": "Write short notes on Recursive Descent Parsing.",
+                "option": null,
+                "subDivision": null,
+                "no": "8"
+            },
+            {
+                "pi": "1.2.1",
+                "co": "2",
+                "bl": "2",
+                "marks": "2",
+                "question": "Compute FIRST and FOLLOW for the following grammar S → AS S →b A →SA A → a",
+                "option": null,
+                "subDivision": null,
+                "no": "9"
+            },
+            {
+                "pi": "2.4.3",
+                "co": "1",
+                "bl": "3",
+                "marks": "10",
+                "question": "Describe the various phases of the compiler with a neat sketch. Interpret theoutput of each phase of expression a:=b+c*50",
+                "option": "A",
+                "subDivision": null,
+                "no": "10"
+            },
+            {
+                "pi": "2.1.2",
+                "co": "1",
+                "bl": "2",
+                "marks": "5",
+                "question": "(i)Illustrate diagrammatically how a language is processed.",
+                "option": "B",
+                "subDivision": "1",
+                "no": "10"
+            },
+            {
+                "pi": "2.1.2",
+                "co": "1",
+                "bl": "2",
+                "marks": "5",
+                "question": "(ii) Write short note on compiler construction tools.",
+                "option": "B",
+                "subDivision": "2",
+                "no": "10"
+            },
+            {
+                "pi": "2.1.2",
+                "co": "2",
+                "bl": "2",
+                "marks": "5",
+                "question": "(i) Explain left recursion and Left factoring.",
+                "option": "A",
+                "subDivision": "1",
+                "no": "11"
+            },
+            {
+                "pi": "2.4.3",
+                "co": "2",
+                "bl": "3",
+                "marks": "5",
+                "question": "(ii) Eliminate left recursion and left factoring for the following grammar.                  E 🡪 E+T | E-T | T                  T 🡪 a | b | (E)",
+                "option": "A",
+                "subDivision": "2",
+                "no": "11"
+            },
+            {
+                "pi": "2.4.3",
+                "co": "2",
+                "bl": "3",
+                "marks": "10",
+                "question": "(i) Construct a predictive parsing table for the grammarS → (L) | aL → L, S | S.",
+                "option": "B",
+                "subDivision": null,
+                "no": "11"
+            },
+            {
+                "pi": "2.4.3",
+                "co": "1",
+                "bl": "4",
+                "marks": "12",
+                "question": "Prove that the following two regular expressions are equivalent by showing that the minimum state DFA's are same: 1. ( a / b ) *         2.  ( a * / b * ) *",
+                "option": "A",
+                "subDivision": null,
+                "no": "12"
+            },
+            {
+                "pi": "2.4.3",
+                "co": "1",
+                "bl": "3",
+                "marks": "12",
+                "question": "Convert the regular expression  (a/b)*abb to DFA using direct method and minimize it.",
+                "option": "B",
+                "subDivision": null,
+                "no": "12"
+            }
+        ],
+        [
+            {
+                "pi": null,
+                "co": "2",
+                "bl": "2",
+                "marks": "2",
+                "question": "Differentiate Top down parser and bottom up parser.",
+                "option": null,
+                "subDivision": null,
+                "no": "1"
+            },
+            {
+                "pi": null,
+                "co": "2",
+                "bl": "1",
+                "marks": "2",
+                "question": "Define Handle. What do you mean by Handle Pruning?",
+                "option": null,
+                "subDivision": null,
+                "no": "2"
+            },
+            {
+                "pi": null,
+                "co": "2",
+                "bl": "1",
+                "marks": "2",
+                "question": "Name the various conflicts that occur during shift reduce parsing.",
+                "option": null,
+                "subDivision": null,
+                "no": "3"
+            },
+            {
+                "pi": null,
+                "co": "2",
+                "bl": "1",
+                "marks": "2",
+                "question": "Define LR (0) items.",
+                "option": null,
+                "subDivision": null,
+                "no": "4"
+            },
+            {
+                "pi": null,
+                "co": "2",
+                "bl": "1",
+                "marks": "2",
+                "question": "Give the structure for YACC program.",
+                "option": null,
+                "subDivision": null,
+                "no": "5"
+            },
+            {
+                "pi": null,
+                "co": "3",
+                "bl": "2",
+                "marks": "2",
+                "question": "Translate the expression a: =b*-c+b*- c into syntax tree.",
+                "option": null,
+                "subDivision": null,
+                "no": "6"
+            },
+            {
+                "pi": null,
+                "co": "3",
+                "bl": "1",
+                "marks": "2",
+                "question": "Write short notes on Annotated Parse Tree.",
+                "option": null,
+                "subDivision": null,
+                "no": "7"
+            },
+            {
+                "pi": null,
+                "co": "3",
+                "bl": "1",
+                "marks": "2",
+                "question": "Outline Synthesized and Inherited Attributes.",
+                "option": null,
+                "subDivision": null,
+                "no": "8"
+            },
+            {
+                "pi": null,
+                "co": "3",
+                "bl": "2",
+                "marks": "2",
+                "question": "How to check structural equivalence of two type expressions?",
+                "option": null,
+                "subDivision": null,
+                "no": "9"
+            },
+            {
+                "pi": null,
+                "co": "2",
+                "bl": "3",
+                "marks": "10",
+                "question": "Generate SLR parsing table for the following grammar and parse the input id+id*id            E->E+T|T            T->T*F|F            F->(E)|id",
+                "option": "A",
+                "subDivision": null,
+                "no": "10"
+            },
+            {
+                "pi": null,
+                "co": "2",
+                "bl": "3",
+                "marks": "10",
+                "question": "Consider the following grammar G:           S->CC           C->cC|dConstruct LALR Parsing table for the grammar Show the moves of parser on the string ccd.",
+                "option": "B",
+                "subDivision": null,
+                "no": "10"
+            },
+            {
+                "pi": null,
+                "co": "3",
+                "bl": "2",
+                "marks": "10",
+                "question": "Define three-address code. Describe the various methods of implementing three-address statements with an example. Give the translation scheme for converting the assignments into three address code",
+                "option": "A",
+                "subDivision": null,
+                "no": "11"
+            },
+            {
+                "pi": null,
+                "co": "3",
+                "bl": "2",
+                "marks": "10",
+                "question": "Elaborate on specification of Simple type checker.",
+                "option": "B",
+                "subDivision": null,
+                "no": "11"
+            },
+            {
+                "pi": null,
+                "co": "3",
+                "bl": "3",
+                "marks": "8",
+                "question": "i)  Translate the following assignment statement into three address code using the translation scheme and represent as Syntax tree:A[i,j]=B[i,j]+2Given Array A,B is array of size 10 x10",
+                "option": "A",
+                "subDivision": "1",
+                "no": "12"
+            },
+            {
+                "pi": null,
+                "co": "3",
+                "bl": "2",
+                "marks": "4",
+                "question": "ii) Construct Syntax-Directed Translation scheme that translates arithmetic expression from infix into postfix notation.",
+                "option": "A",
+                "subDivision": "2",
+                "no": "12"
+            },
+            {
+                "pi": null,
+                "co": "3",
+                "bl": "3",
+                "marks": "12",
+                "question": "Generate intermediate code for the following code segment:(i)if (a > b)     x = a + b else     x = a − b where a , x and b of int type data(ii)int a,b; float c; a= 10; Switch (a) {case 10: c = 1;case 20: c = 2; }",
+                "option": "B",
+                "subDivision": null,
+                "no": "12"
+            }
+        ],
+        [
+            {
+                "pi": "1.2.2",
+                "co": "4",
+                "bl": "1",
+                "marks": "2",
+                "question": "Differentiate between static and dynamic storage allocation.",
+                "option": null,
+                "subDivision": null,
+                "no": "1"
+            },
+            {
+                "pi": "1.2.1",
+                "co": "4",
+                "bl": "2",
+                "marks": "2",
+                "question": "Write short notes on dangling references.",
+                "option": null,
+                "subDivision": null,
+                "no": "2"
+            },
+            {
+                "pi": "1.2.2",
+                "co": "4",
+                "bl": "1",
+                "marks": "2",
+                "question": "Calculate Instruction cost for:Mov 4(R1),bMov b, aAdd c,aMov *R1, *R2",
+                "option": null,
+                "subDivision": null,
+                "no": "3"
+            },
+            {
+                "pi": "1.2.1",
+                "co": "4",
+                "bl": "2",
+                "marks": "2",
+                "question": "Mention the fields in an Activation record.",
+                "option": null,
+                "subDivision": null,
+                "no": "4"
+            },
+            {
+                "pi": "1.2.1",
+                "co": "4",
+                "bl": "1",
+                "marks": "2",
+                "question": "List the issues in developing code generator.",
+                "option": null,
+                "subDivision": null,
+                "no": "5"
+            },
+            {
+                "pi": "1.2.1",
+                "co": "5",
+                "bl": "2",
+                "marks": "2",
+                "question": "Define Basic Block. Give example.",
+                "option": null,
+                "subDivision": null,
+                "no": "6"
+            },
+            {
+                "pi": "1.2.1",
+                "co": "5",
+                "bl": "1",
+                "marks": "2",
+                "question": "When do you call a variable to be syntactically live at a point?",
+                "option": null,
+                "subDivision": null,
+                "no": "7"
+            },
+            {
+                "pi": "1.2.1",
+                "co": "5",
+                "bl": "1",
+                "marks": "2",
+                "question": "Classify optimization techniques performed on basic block.",
+                "option": null,
+                "subDivision": null,
+                "no": "8"
+            },
+            {
+                "pi": "1.2.1",
+                "co": "5",
+                "bl": "2",
+                "marks": "2",
+                "question": "Point out the characteristics of peephole optimization.",
+                "option": null,
+                "subDivision": null,
+                "no": "9"
+            },
+            {
+                "pi": "2.4.3",
+                "co": "4",
+                "bl": "2",
+                "marks": "10",
+                "question": "What is the Memory Hierarchy configuration of a computer ? Discuss in detail about various allocation space of memory and the usage of stack in the memory allocation.",
+                "option": "A",
+                "subDivision": null,
+                "no": "10"
+            },
+            {
+                "pi": "2.1.2",
+                "co": "4",
+                "bl": "3",
+                "marks": "10",
+                "question": "Write and apply code generation algorithm to generate a code sequence for the three address statement for the following assignment statement: d=(a-b)*(a-c)+(a-c)",
+                "option": "B",
+                "subDivision": null,
+                "no": "10"
+            },
+            {
+                "pi": "2.1.2",
+                "co": "5",
+                "bl": "2",
+                "marks": "10",
+                "question": "Identify and Elaborate various optimization that could be performed on a peephole with suitable example.",
+                "option": "A",
+                "subDivision": null,
+                "no": "11"
+            },
+            {
+                "pi": "2.4.3",
+                "co": "5",
+                "bl": "2",
+                "marks": "10",
+                "question": "Summarize in detail about the global dataflow analysis with example",
+                "option": "B",
+                "subDivision": null,
+                "no": "11"
+            },
+            {
+                "pi": "2.4.3",
+                "co": "5",
+                "bl": "3",
+                "marks": "8",
+                "question": "Consider the following basic block, in which all variables are integers and ** denotes exponentiation.a:=x**2b:=3c:=xd:=c*ce:=b*2f:=a+dg:=e*fApply all the optimization techniques to this basic block. Compute the result of each transformation.",
+                "option": "B",
+                "subDivision": "1",
+                "no": "12"
+            },
+            {
+                "pi": "2.1.2",
+                "co": "4",
+                "bl": "2",
+                "marks": "4",
+                "question": "Examine how non local data is accessed in languages without nested procedure.",
+                "option": "B",
+                "subDivision": "2",
+                "no": "12"
+            },
+            {
+                "pi": "2.4.3",
+                "co": "5",
+                "bl": "3",
+                "marks": "8",
+                "question": "Write algorithm for generating DAG.With the help of algorithm construct DAG for the following Basic Block:1. t1: = 4*i2. t2 := a[t1]3. t3: = 4*i4. t4: = b[t3]5. t5 := t2*t46. t6: = prod+t57. t7 :=i+18.i=t79:if i<=20 goto(1)",
+                "option": "B",
+                "subDivision": "3",
+                "no": "12"
+            },
+            {
+                "pi": "2.1.2",
+                "co": "4",
+                "bl": "2",
+                "marks": "4",
+                "question": "Elucidate the Issues with nested procedure in accessing non local data.",
+                "option": "B",
+                "subDivision": "4",
+                "no": "12"
+            }
+        ]
     ]
 }
