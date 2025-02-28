@@ -18,7 +18,7 @@ def get_co_questions(questions: List[Question], co: Co):
         question_groups[key].append(question)
 
     # Select one option per question number, ensuring all subdivisions are included
-    filtered_questions = []
+    filtered_questions: List[Question]= []
     seen_question_nums = set()
 
     for question in questions:
@@ -36,7 +36,7 @@ def get_co_questions(questions: List[Question], co: Co):
             # For questions without options, just add them directly
             filtered_questions.append(question)
 
-    return filtered_questions
+    return [filtered_question for filtered_question in filtered_questions if filtered_question.obtained_mark != filtered_question.total_mark]
 
 
 def distribute_marks_random(questions: List[Question], marks_to_be_distributed: int, correct_strictly: bool = True):
@@ -48,14 +48,15 @@ def distribute_marks_random(questions: List[Question], marks_to_be_distributed: 
                 distribute_marks_random(buffer_questions, marks_to_be_distributed, False)
                 return
             else:
-                raise Exception("No questions left for CO", co.obtained_mark)
+                raise Exception("No questions left for CO", marks_to_be_distributed)
 
         random_question = random.choice(questions)
 
         if not random_question.obtained_mark:
             random_question.obtained_mark = 1
         else:
-            random_question.obtained_mark += 1
+            if random_question.obtained_mark != random_question.total_mark:
+                random_question.obtained_mark += 1
 
         if random_question.obtained_mark == random_question.total_mark:
             questions.remove(random_question)
@@ -81,21 +82,41 @@ def get_mark_with_percentage(total_mark: int, percentage: int) -> int:
 def get_total_questions_mark(questions: List[Question]) -> int:
     return sum([question.total_mark for question in questions])
 
+def get_question_key(question: Question, serial_test: SerialTest):
+    return f"serial test {serial_test.num}\nq{question.num}{question.option if question.option else ''}{question.sub_division if question.sub_division else ''}\nco{question.co}"
 
-def convert_to_dataframe(student: Student) -> pd.DataFrame:
-    expanded_data = {
-        "reg_no": student.reg_no,
-        "section": student.section,
-        "name": student.name,
+def get_co_key(co: Co, serial_test: SerialTest):
+    return f"serial test {serial_test.num}\nco{co.num}"
+
+def convert_to_series(student: Student) -> pd.Series:
+    data = {}
+    
+    data["reg_no"] = student.reg_no
+    data["section"] = student.section
+    data["name"] = student.name
+    
+    for serial_test in student.serial_tests:
+        for question in serial_test.questions:
+            key = get_question_key(question, serial_test)
+            data[key] = question.obtained_mark
+        for co in serial_test.co:
+            key = get_co_key(co, serial_test)
+            data[key] = co.obtained_mark
+
+    return pd.Series(data)
+
+def get_total_mark_row(serial_tests: List[SerialTest]):
+    data = {
+        "reg_no": "",
+        "section": "",
+        "name": "Total Marks",
     }
-
-    for serial_test in student.serial_tests or []:
-        for question in serial_test.questions or []:
-            question_key = f"serial_test_{serial_test.num}_q_{question.num}{'_' + question.option if question.option else ''}{'_' + question.sub_division if question.sub_division else ''}{'_' + str(question.total_mark) + 'marks'}"
-            expanded_data[question_key] = question.obtained_mark
-
-    return expanded_data
-
+    for serial_test in serial_tests:
+        for question in serial_test.questions:
+            data[get_question_key(question, serial_test)] = question.total_mark
+        for co in serial_test.co:
+            data[get_co_key(co, serial_test)] = co.total_mark
+    return pd.Series(data)
 
 def populate_student_co_marks(questions: List[Question], co: Co):
     co_questions = get_co_questions(questions, co)
@@ -122,8 +143,8 @@ for student in student_data:
 f = open("temp.json", "w")
 
 student_data_json = [student.model_dump() for student in student_data]
-f.write(json.dumps(student_data_json[:10], indent=4))
+f.write(json.dumps(student_data_json[10:45], indent=4))
 f.close()
 
-df = pd.DataFrame([convert_to_dataframe(student) for student in student_data])
+df = pd.DataFrame([get_total_mark_row(student_data[0].serial_tests)]+[convert_to_series(student) for student in student_data])
 df.to_excel("student_data.xlsx", index=False)
