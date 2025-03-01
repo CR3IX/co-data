@@ -43,12 +43,9 @@ def get_co_questions(questions: List[Question], co: Co):
 
     return [filtered_question for filtered_question in filtered_questions if filtered_question.obtained_mark != filtered_question.total_mark]
 
-def get_part_a_questions(questions: List[Question]):
-    return [question for question in questions if question.total_mark <= 2]
-
 def distribute_marks_random(questions: List[Question], marks_to_be_distributed: int, correct_strictly: bool = True):
     buffer_questions = []
-    while marks_to_be_distributed != 0:
+    while marks_to_be_distributed > 0:
 
         if len(questions) == 0:
             if correct_strictly and len(buffer_questions) > 0:
@@ -71,17 +68,20 @@ def distribute_marks_random(questions: List[Question], marks_to_be_distributed: 
 
         marks_to_be_distributed -= 1
 
+def get_part_a_questions(questions: List[Question]):
+    return [question for question in questions if question.total_mark <= 2]
 
 def get_part_b_c_questions(questions: List[Question]) -> List[Question]:
     return [question for question in questions if question.total_mark > 2]
 
 
-def get_percentage(total_mark: int, obtained_mark: int) -> int:
-    return int((obtained_mark / total_mark) * 100)
+def get_percentage(total_mark: int, obtained_mark: int):
+    return (obtained_mark / total_mark) * 100
 
 
 def get_mark_with_percentage(total_mark: int, percentage: int) -> int:
-    return int((total_mark * percentage) / 100)
+    mark = int((total_mark * percentage) / 100)
+    return mark + (1 if mark < total_mark else 0)
 
 
 def get_total_questions_mark(questions: List[Question]) -> int:
@@ -125,31 +125,39 @@ def get_total_mark_row(serial_tests: List[SerialTest]):
             data[get_co_key(co, serial_test)] = co.total_mark
     return pd.Series(data)
 
-def populate_student_co_marks(questions: List[Question], co: Co):
+def populate_student_co_marks(questions: List[Question], co: Co, serial_test: bool = True):
     co_questions = get_co_questions(questions, co)
 
     obtained_mark = co.obtained_mark
     
     part_b_c_questions = get_part_b_c_questions(co_questions)
     part_a_questions = get_part_a_questions(co_questions)
-    
-    obtained_percentage = get_percentage(co.total_mark, co.obtained_mark)
-    part_b_c_mark_weighted = get_mark_with_percentage(
-        get_total_questions_mark(part_b_c_questions),
-        min(obtained_percentage + random.randint(0,5), 100)
-    )
-    # distribute_marks_random(co_questions, co.obtained_mark, )
-    
-    distribute_marks_random(part_b_c_questions, part_b_c_mark_weighted)
-    obtained_mark -= part_b_c_mark_weighted
-    distribute_marks_random(part_a_questions, obtained_mark)
+
+    if serial_test:
+        obtained_percentage = get_percentage(co.total_mark, co.obtained_mark)
+        part_b_c_mark_weighted = get_mark_with_percentage(
+            get_total_questions_mark(part_b_c_questions),
+            min(obtained_percentage + random.randint(0,5), 100)
+        )
+        # distribute_marks_random(co_questions, co.obtained_mark, )
+        
+        distribute_marks_random(part_b_c_questions, part_b_c_mark_weighted)
+        obtained_mark -= part_b_c_mark_weighted
+        distribute_marks_random(part_a_questions, obtained_mark)
+    else:
+        distribute_marks_random(co_questions, co.obtained_mark)
 
 
 for student in student_data:
     for serial_test in student.serial_tests:
         for co in serial_test.co:
             if co and co.obtained_mark and co.obtained_mark > 0:
-                populate_student_co_marks(serial_test.questions, co)
+                populate_student_co_marks(serial_test.questions, co, True)
+
+    for assignment in student.assignments:
+        for co in assignment.co:
+            if co and co.obtained_mark and co.obtained_mark > 0:
+                populate_student_co_marks(assignment.questions, co, False)
 
 f = open("temp.json", "w")
 
