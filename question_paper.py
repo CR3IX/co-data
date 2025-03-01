@@ -1,4 +1,5 @@
 import random
+import json
 
 def generate_questions(co_marks_splitUp, is_serialtest):
     if is_serialtest:
@@ -31,6 +32,7 @@ def generate_questions(co_marks_splitUp, is_serialtest):
                         "marks": mark,
                         "option": "A" if mark > 2 else None,
                         "subDivision": None,
+                        "obatained_mark": None
                     })
                     
                     # If mark > 2, create another question with option "B"
@@ -40,6 +42,7 @@ def generate_questions(co_marks_splitUp, is_serialtest):
                             "marks": mark,
                             "option": "B",
                             "subDivision": None,
+                            "obatained_mark": None
                         })
                     break
     
@@ -60,14 +63,19 @@ def generate_questions(co_marks_splitUp, is_serialtest):
 
 
 co_marks_splitUp = [
-    {"num": 1, "total_mark": 30},
+    {"num": 1, "total_mark": 20},
     {"num": 2, "total_mark": 20},
-    {"num": 3, "total_mark": 0},
+    {"num": 3, "total_mark": 10},
     {"num": 4, "total_mark": 0},
     {"num": 5, "total_mark": 0},
     {"num": 6, "total_mark": 0}
 ]
 
 
-questions = generate_questions(co_marks_splitUp,True)
+
+questions = generate_questions(co_marks_splitUp, False)
+
+with open("sample_random_qp.json", "w") as f:
+    json.dump(questions, f, indent=4)
+
 print(questions)
