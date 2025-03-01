@@ -1,12 +1,13 @@
-from mark_split import *
 from models import *
+from copy import deepcopy
+
 
 def get_questions_with_co(questions: List[Question], co: Co):
   return [question for question in questions if question.co == co.num]
 
 def check_obtained_marks(questions: List[Question], co:Co):
   obtained_total = sum([question.obtained_mark for question in questions])
-  return obtained_total == co.total_mark
+  return obtained_total == co.obtained_mark
 
 def check_total_marks(questions: List[Question], co:Co):
   questions_copy = [deepcopy(question) for question in questions]
@@ -34,8 +35,9 @@ def check_co_wise_total(student: Student):
       if question.obtained_mark > question.total_mark:
         print(f"obtained_mark exceeds total_mark {student.name} serial_test{serial_test.num} co{co.num}")
 
-for student in student_data:
-  check_co_wise_total(student)
+def test_student_data(student_data):
+  for student in student_data:
+    check_co_wise_total(student)
   
 
 def test_question_paper(questions: List, co_marks_splitUp):

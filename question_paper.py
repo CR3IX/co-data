@@ -1,5 +1,5 @@
 import random
-import json
+from models import *
 
 def generate_questions(co_marks_splitUp, is_serialtest):
     if is_serialtest:
@@ -72,10 +72,5 @@ co_marks_splitUp = [
 ]
 
 
-
-questions = generate_questions(co_marks_splitUp, False)
-
-with open("sample_random_qp.json", "w") as f:
-    json.dump(questions, f, indent=4)
-
-print(questions)
+# questions = generate_questions(co_marks_splitUp,True)
+# print(questions)

@@ -77,7 +77,9 @@ def populate_questions_in_serial_test(qp, serial_test_index: int):
 
 def populate_student_data_and_questions(df: pd.DataFrame):
     populate_student_data(df)
-    qp = {"questions": [generate_questions(serial_test.co, True) for serial_test in student_data[0].serial_tests]}
+    qp = {"questions": [generate_questions(
+            [co.model_dump() for co in serial_test.co], True
+        ) for serial_test in student_data[0].serial_tests]}
 
     for i in range(len(student_data[0].serial_tests)):
         populate_questions_in_serial_test(qp, i)

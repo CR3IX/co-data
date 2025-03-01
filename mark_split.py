@@ -1,13 +1,11 @@
 from extract import *
 import random
+from test import *
 
 df = pd.read_excel("Compiler Design 2022-23 Even CO-PO attainment (1).xlsx", sheet_name='S2')
-student_data: List[Student] = populate_student_data_and_questions(df, "sample_qp.json")
+student_data: List[Student] = populate_student_data_and_questions(df)
 
-
-def get_co_questions(questions: List[Question], co: Co):
-    questions = [question for question in questions if question.co == co.num]
-
+def filter_questions_choose_random_option(questions : List[Question]):
     random.shuffle(questions)
     # Group questions by their number and option
     question_groups = {}
@@ -36,15 +34,24 @@ def get_co_questions(questions: List[Question], co: Co):
             # For questions without options, just add them directly
             filtered_questions.append(question)
 
+    return filtered_questions
+
+def get_co_questions(questions: List[Question], co: Co):
+    questions = [question for question in questions if question.co == co.num]
+
+    filtered_questions = filter_questions_choose_random_option(questions)
+
     return [filtered_question for filtered_question in filtered_questions if filtered_question.obtained_mark != filtered_question.total_mark]
 
+def get_part_a_questions(questions: List[Question]):
+    return [question for question in questions if question.total_mark <= 2]
 
 def distribute_marks_random(questions: List[Question], marks_to_be_distributed: int, correct_strictly: bool = True):
     buffer_questions = []
     while marks_to_be_distributed != 0:
 
         if len(questions) == 0:
-            if correct_strictly:
+            if correct_strictly and len(buffer_questions) > 0:
                 distribute_marks_random(buffer_questions, marks_to_be_distributed, False)
                 return
             else:
@@ -55,14 +62,12 @@ def distribute_marks_random(questions: List[Question], marks_to_be_distributed: 
         if not random_question.obtained_mark:
             random_question.obtained_mark = 1
         else:
-            if random_question.obtained_mark != random_question.total_mark:
+            if random_question.obtained_mark < random_question.total_mark - (1 if correct_strictly else 0):
                 random_question.obtained_mark += 1
 
-        if random_question.obtained_mark == random_question.total_mark:
+        if random_question.obtained_mark == random_question.total_mark - (1 if correct_strictly else 0):
             questions.remove(random_question)
-        elif random_question and correct_strictly and random_question.obtained_mark >= random_question.total_mark - random.randint(1, 2):
             buffer_questions.append(random_question)
-            questions.remove(random_question)
 
         marks_to_be_distributed -= 1
 
@@ -80,7 +85,9 @@ def get_mark_with_percentage(total_mark: int, percentage: int) -> int:
 
 
 def get_total_questions_mark(questions: List[Question]) -> int:
-    return sum([question.total_mark for question in questions])
+    filtered_questions = filter_questions_choose_random_option(questions)
+
+    return sum([question.total_mark for question in filtered_questions])
 
 def get_question_key(question: Question, serial_test: SerialTest):
     return f"serial test {serial_test.num}\nq{question.num}{question.option if question.option else ''}{question.sub_division if question.sub_division else ''}\nco{question.co}"
@@ -122,16 +129,20 @@ def populate_student_co_marks(questions: List[Question], co: Co):
     co_questions = get_co_questions(questions, co)
 
     obtained_mark = co.obtained_mark
+    
     part_b_c_questions = get_part_b_c_questions(co_questions)
+    part_a_questions = get_part_a_questions(co_questions)
+    
     obtained_percentage = get_percentage(co.total_mark, co.obtained_mark)
     part_b_c_mark_weighted = get_mark_with_percentage(
         get_total_questions_mark(part_b_c_questions),
-        min(obtained_percentage + random.randint(5, 10), 100)
+        min(obtained_percentage + random.randint(0,5), 100)
     )
-
+    # distribute_marks_random(co_questions, co.obtained_mark, )
+    
     distribute_marks_random(part_b_c_questions, part_b_c_mark_weighted)
     obtained_mark -= part_b_c_mark_weighted
-    distribute_marks_random(co_questions, obtained_mark)
+    distribute_marks_random(part_a_questions, obtained_mark)
 
 
 for student in student_data:
@@ -143,8 +154,10 @@ for student in student_data:
 f = open("temp.json", "w")
 
 student_data_json = [student.model_dump() for student in student_data]
-f.write(json.dumps(student_data_json[10:45], indent=4))
+f.write(json.dumps(student_data_json[:45], indent=4))
 f.close()
 
 df = pd.DataFrame([get_total_mark_row(student_data[0].serial_tests)]+[convert_to_series(student) for student in student_data])
 df.to_excel("student_data.xlsx", index=False)
+
+test_student_data(student_data)
