@@ -1,4 +1,5 @@
 import random
+from models import *
 
 def generate_questions(co_marks_splitUp, is_serialtest):
     if is_serialtest:
@@ -69,5 +70,5 @@ co_marks_splitUp = [
 ]
 
 
-questions = generate_questions(co_marks_splitUp,True)
-print(questions)
+# questions = generate_questions(co_marks_splitUp,True)
+# print(questions)

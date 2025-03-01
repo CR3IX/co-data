@@ -6,7 +6,7 @@ def get_questions_with_co(questions: List[Question], co: Co):
 
 def check_obtained_marks(questions: List[Question], co:Co):
   obtained_total = sum([question.obtained_mark for question in questions])
-  return obtained_total == co.total_mark
+  return obtained_total == co.obtained_mark
 
 def check_total_marks(questions: List[Question], co:Co):
   questions_copy = [deepcopy(question) for question in questions]

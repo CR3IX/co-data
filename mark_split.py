@@ -2,7 +2,7 @@ from extract import *
 import random
 
 df = pd.read_excel("Compiler Design 2022-23 Even CO-PO attainment (1).xlsx", sheet_name='S2')
-student_data: List[Student] = populate_student_data_and_questions(df, "sample_qp.json")
+student_data: List[Student] = populate_student_data_and_questions(df)
 
 
 def get_co_questions(questions: List[Question], co: Co):
@@ -39,13 +39,16 @@ def get_co_questions(questions: List[Question], co: Co):
     return [filtered_question for filtered_question in filtered_questions if filtered_question.obtained_mark != filtered_question.total_mark]
 
 
-def distribute_marks_random(questions: List[Question], marks_to_be_distributed: int, correct_strictly: bool = True):
+def distribute_marks_random(questions: List[Question], marks_to_be_distributed: int, correct_strictly: bool = False):
     buffer_questions = []
     while marks_to_be_distributed != 0:
 
         if len(questions) == 0:
             if correct_strictly:
+                
                 distribute_marks_random(buffer_questions, marks_to_be_distributed, False)
+                if marks_to_be_distributed != 0:
+                    raise Exception("Marks not distributed entirely", marks_to_be_distributed, buffer_questions, questions)
                 return
             else:
                 raise Exception("No questions left for CO", marks_to_be_distributed)
@@ -128,10 +131,11 @@ def populate_student_co_marks(questions: List[Question], co: Co):
         get_total_questions_mark(part_b_c_questions),
         min(obtained_percentage + random.randint(5, 10), 100)
     )
+    distribute_marks_random(co_questions, co.obtained_mark)
 
-    distribute_marks_random(part_b_c_questions, part_b_c_mark_weighted)
-    obtained_mark -= part_b_c_mark_weighted
-    distribute_marks_random(co_questions, obtained_mark)
+    # distribute_marks_random(part_b_c_questions, part_b_c_mark_weighted)
+    # obtained_mark -= part_b_c_mark_weighted
+    # distribute_marks_random(co_questions, obtained_mark)
 
 
 for student in student_data:
@@ -143,7 +147,7 @@ for student in student_data:
 f = open("temp.json", "w")
 
 student_data_json = [student.model_dump() for student in student_data]
-f.write(json.dumps(student_data_json[10:45], indent=4))
+f.write(json.dumps(student_data_json[:45], indent=4))
 f.close()
 
 df = pd.DataFrame([get_total_mark_row(student_data[0].serial_tests)]+[convert_to_series(student) for student in student_data])
