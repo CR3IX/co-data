@@ -34,7 +34,7 @@ def get_total_mark_co(df: pd.DataFrame, index: int, serial_test : bool = True):
 
 def populate_student_data(df: pd.DataFrame):
     for index, row in df.iterrows():
-        if index == 0:
+        if index == 0 or pd.isna(row[headers[1]]):
             continue
         reg_no = str(int(row[headers[1]]))
         section = str(row[headers[2]])

@@ -1,8 +1,11 @@
 from extract import *
 import random
+from excel import clean_header
 from test import *
 
-df = pd.read_excel("Compiler Design 2022-23 Even CO-PO attainment (1).xlsx", sheet_name='S2')
+df = pd.read_excel("Compiler Design 2022-23 Even CO-PO attainment.xlsx", sheet_name='S2')
+subject_details, df = clean_header(df)
+
 student_data: List[Student] = populate_student_data_and_questions(df)
 
 def filter_questions_choose_random_option(questions : List[Question]):
