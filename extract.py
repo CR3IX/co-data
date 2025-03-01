@@ -2,6 +2,7 @@ import pandas as pd
 import json
 from models import *
 from copy import deepcopy
+from question_paper import *
 
 student_data: List[Student] = []
 
@@ -66,9 +67,7 @@ def populate_student_data(df: pd.DataFrame):
             print(e)
 
 
-def populate_questions_in_serial_test(question_paper_json_file_name: str, serial_test_index: int):
-    with open(question_paper_json_file_name, "r") as f:
-        qp = json.load(f)
+def populate_questions_in_serial_test(qp, serial_test_index: int):
         base_questions = [Question.from_parsed_question(question) for question in qp["questions"][serial_test_index]]
 
         for student in student_data:
@@ -76,10 +75,11 @@ def populate_questions_in_serial_test(question_paper_json_file_name: str, serial
             student.serial_tests[serial_test_index].questions = deepcopy(base_questions)
 
 
-def populate_student_data_and_questions(df: pd.DataFrame, question_paper_json_file_name: str):
+def populate_student_data_and_questions(df: pd.DataFrame):
     populate_student_data(df)
+    qp = {"questions": [generate_questions(serial_test.co, True) for serial_test in student_data[0].serial_tests]}
 
     for i in range(len(student_data[0].serial_tests)):
-        populate_questions_in_serial_test(question_paper_json_file_name, i)
+        populate_questions_in_serial_test(qp, i)
 
     return student_data
