@@ -89,11 +89,11 @@ def get_total_questions_mark(questions: List[Question]) -> int:
 
     return sum([question.total_mark for question in filtered_questions])
 
-def get_question_key(question: Question, serial_test: SerialTest):
-    return f"serial test {serial_test.num}\nq{question.num}{question.option if question.option else ''}{question.sub_division if question.sub_division else ''}\nco{question.co}"
+def get_question_key(question: Question, serial_test: SerialTest, is_serial_test: bool = True):
+    return f"{"serial test" if is_serial_test else "assignment"} {serial_test.num}\nq{question.num}{question.option if question.option else ''}{question.sub_division if question.sub_division else ''}\nco{question.co}"
 
-def get_co_key(co: Co, serial_test: SerialTest):
-    return f"serial test {serial_test.num}\nco{co.num}"
+def get_co_key(co: Co, serial_test: SerialTest, is_serial_test: bool = True):
+    return f"{"serial test" if is_serial_test else "assignment"} {serial_test.num}\nco{co.num}"
 
 def convert_to_series(student: Student) -> pd.Series:
     data = {}
@@ -108,6 +108,14 @@ def convert_to_series(student: Student) -> pd.Series:
             data[key] = question.obtained_mark
         for co in serial_test.co:
             key = get_co_key(co, serial_test)
+            data[key] = co.obtained_mark
+
+    for assignment in student.assignments:
+        for question in assignment.questions:
+            key = get_question_key(question, assignment, False)
+            data[key] = question.obtained_mark
+        for co in assignment.co:
+            key = get_co_key(co, assignment, False)
             data[key] = co.obtained_mark
 
     return pd.Series(data)
