@@ -40,7 +40,7 @@ def test_student_data(student_data):
     check_co_wise_total(student)
   
 
-def test_question_paper(questions: List, co_marks_splitUp):
+def test_question_paper(questions: List, co_marks_splitUp:List):
     # Step 1: Group questions by CO
     same_co_questions = {}
     for question in questions:
@@ -60,7 +60,7 @@ def test_question_paper(questions: List, co_marks_splitUp):
         co_num = str(co["num"])  
         expected_marks = co["total_mark"]
         assigned_marks = co_marks_assigned.get(co_num, 0)
-        
+        print(co,"co_num",co_num,"Assigned Marks:", assigned_marks, "Expected Marks:", expected_marks) 
         status = "✅ Matched" if assigned_marks == expected_marks else f"❌ Mismatch  {assigned_marks}"
         
         print(f"CO {co_num}: Assigned = {assigned_marks}, Expected = {expected_marks} --> {status}")
@@ -72,35 +72,3 @@ def test_question_paper(questions: List, co_marks_splitUp):
             print(f"  - Q{q['no']} | Marks: {q['marks']} | Option: {q['option']}")
     
     return co_marks_assigned
-
-# # Input Data
-# questions = [
-#     {"co": "2", "marks": 2, "option": None, "subDivision": None, "no": 1},
-#     {"co": "2", "marks": 2, "option": None, "subDivision": None, "no": 2},
-#     {"co": "2", "marks": 2, "option": None, "subDivision": None, "no": 3},
-#     {"co": "2", "marks": 2, "option": None, "subDivision": None, "no": 4},
-#     {"co": "2", "marks": 2, "option": None, "subDivision": None, "no": 5},
-#     {"co": "3", "marks": 2, "option": None, "subDivision": None, "no": 6},
-#     {"co": "3", "marks": 2, "option": None, "subDivision": None, "no": 7},
-#     {"co": "3", "marks": 2, "option": None, "subDivision": None, "no": 8},
-#     {"co": "3", "marks": 2, "option": None, "subDivision": None, "no": 9},
-#     {"co": "3", "marks": 2, "option": None, "subDivision": None, "no": 10},
-#     {"co": "1", "marks": 10, "option": "A", "subDivision": None, "no": 11},
-#     {"co": "1", "marks": 10, "option": "B", "subDivision": None, "no": 11},
-#     {"co": "1", "marks": 10, "option": "A", "subDivision": None, "no": 12},
-#     {"co": "1", "marks": 10, "option": "B", "subDivision": None, "no": 12},
-#     {"co": "2", "marks": 10, "option": "A", "subDivision": None, "no": 13},
-#     {"co": "2", "marks": 10, "option": "B", "subDivision": None, "no": 13}
-# ]
-
-# co_marks_splitUp = [ 
-#     {"num": 1, "total_mark": 20},
-#     {"num": 2, "total_mark": 20},
-#     {"num": 3, "total_mark": 10},
-#     {"num": 4, "total_mark": 0},
-#     {"num": 5, "total_mark": 0},
-#     {"num": 6, "total_mark": 0}
-# ]
-
-# # Run validation
-# test_question_paper(questions, co_marks_splitUp)

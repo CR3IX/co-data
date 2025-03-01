@@ -1,7 +1,11 @@
 import random
 from models import *
+from copy import deepcopy
+from test import *
 
 def generate_questions(co_marks_splitUp, is_serialtest):
+    co_marks_splitUp_copy = deepcopy(co_marks_splitUp)
+
     if is_serialtest:
         question_splitUp = [
             {"mark": 2, "no_of_questions": 9},
@@ -57,20 +61,19 @@ def generate_questions(co_marks_splitUp, is_serialtest):
         else:
             questions_sorted[i]["no"] = question_no
             question_no += 1 
-    
+    test_question_paper(questions_sorted,co_marks_splitUp_copy)
     return questions_sorted
 
 
+if __name__ == "__main__":
+    co_marks_splitUp = [
+        {"num": 1, "total_mark": 20},
+        {"num": 2, "total_mark": 20},
+        {"num": 3, "total_mark": 10},
+        {"num": 4, "total_mark": 0},
+        {"num": 5, "total_mark": 0},
+        {"num": 6, "total_mark": 0}
+    ]
 
-co_marks_splitUp = [
-    {"num": 1, "total_mark": 20},
-    {"num": 2, "total_mark": 20},
-    {"num": 3, "total_mark": 10},
-    {"num": 4, "total_mark": 0},
-    {"num": 5, "total_mark": 0},
-    {"num": 6, "total_mark": 0}
-]
 
-
-# questions = generate_questions(co_marks_splitUp,True)
-# print(questions)
+    questions = generate_questions(co_marks_splitUp,True)
