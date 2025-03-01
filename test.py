@@ -35,8 +35,9 @@ def check_co_wise_total(student: Student):
       if question.obtained_mark > question.total_mark:
         print(f"obtained_mark exceeds total_mark {student.name} serial_test{serial_test.num} co{co.num}")
 
-def test_student_data(student_data):
-  for student in student_data:
+def test_student_data(student_data : List[Student]):
+  student_data_copy = [deepcopy(student) for student in student_data]
+  for student in student_data_copy:
     check_co_wise_total(student)
 
       
