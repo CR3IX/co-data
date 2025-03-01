@@ -171,3 +171,5 @@ cython_debug/
 .pypirc
 
 QuestionPapers
+
+student_data.xlsx

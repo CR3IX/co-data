@@ -19,25 +19,27 @@ def check_total_marks(questions: List[Question], co:Co):
   total_mark = sum([question.total_mark for question in questions_copy])
   return total_mark == co.total_mark
 
-def check_co_wise_total(student: Student):
-  for serial_test in student.serial_tests:
-    
-    for co in serial_test.co:
-      co_questions = get_questions_with_co(serial_test.questions, co)
+def check_co_wise_total(student: Student, cos: List[Co], questions: List[Question], num: int, serial_test: bool = True):
+    for co in cos:
+      co_questions = get_questions_with_co(questions, co)
 
       if not check_obtained_marks(co_questions, co):
-        print(f"obtained_mark not matched {student.name} serial_test{serial_test.num} co{co.num}")
+        print(f"obtained_mark not matched {student.name} {'serial_test' if serial_test else 'assignment'}{num} co{co.num}")
 
       if not check_total_marks(co_questions, co):
-        print(f"total_mark not matched {student.name} serial_test{serial_test.num} co{co.num}")
+        print(f"total_mark not matched {student.name} {'serial_test' if serial_test else 'assignment'}{num} co{co.num}")
 
-    for question in serial_test.questions:
+    for question in questions:
       if question.obtained_mark > question.total_mark:
-        print(f"obtained_mark exceeds total_mark {student.name} serial_test{serial_test.num} co{co.num}")
+        print(f"obtained_mark exceeds total_mark {student.name} {'serial_test' if serial_test else 'assignment'}{num} co{co.num}")
 
 def test_student_data(student_data):
   for student in student_data:
-    check_co_wise_total(student)
+    for serial_test in student.serial_tests:
+      check_co_wise_total(student, serial_test.co, serial_test.questions, serial_test.num, True)
+
+    for assignment in student.assignments:
+      check_co_wise_total(student, assignment.co, assignment.questions, assignment.num, False)
   
 
 def test_question_paper(questions: List, co_marks_splitUp:List):

@@ -11,6 +11,7 @@ class Student(BaseModel):
     section: str
     name: str
     serial_tests: Optional[List["SerialTest"]] = None
+    assignments: Optional[List["SerialTest"]] = None
 
 
 class Question(BaseModel):
