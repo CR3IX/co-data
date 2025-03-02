@@ -1,7 +1,7 @@
 from extract import *
 import random
-from excel import clean_header
 from test import *
+from excel import *
 
 df = pd.read_excel("Compiler Design 2022-23 Even CO-PO attainment.xlsx", sheet_name='S2')
 subject_details, df = clean_header(df)
@@ -177,6 +177,7 @@ f.write(json.dumps(student_data_json[:45], indent=4))
 f.close()
 
 df = pd.DataFrame([get_total_mark_row(student_data[0].serial_tests)]+[convert_to_series(student) for student in student_data])
+merge_subjectdetails_studentdata(subject_details, df, "merged_excel.xlsx")
 df.to_excel("student_data.xlsx", index=False)
 
 test_student_data(student_data)
