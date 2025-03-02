@@ -4,9 +4,9 @@ def clean_header(df: pd.DataFrame) -> pd.DataFrame:
     sno_row_index = df[df.iloc[:, 0] == "Sno"].index[0]
     df.columns = df.iloc[sno_row_index]
     subject_details = df.iloc[:sno_row_index-1, :]
-    df = df.iloc[sno_row_index+1:, :]
+    students_data = df.iloc[sno_row_index+1:, :].reset_index(drop=True)
 
-    return subject_details, df
+    return subject_details, students_data
 
 def merge_subjectdetails_studentdata(subject_details: pd.DataFrame, student_data: pd.DataFrame, output_filename: str) -> None:
     with pd.ExcelWriter(output_filename, engine="openpyxl") as writer:

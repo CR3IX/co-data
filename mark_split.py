@@ -4,9 +4,9 @@ from test import *
 from excel import *
 
 df = pd.read_excel("Compiler Design 2022-23 Even CO-PO attainment.xlsx", sheet_name='S2')
-subject_details, df = clean_header(df)
+subject_details, students_data = clean_header(df)
 
-student_data: List[Student] = populate_student_data_and_questions(df)
+student_data: List[Student] = populate_student_data_and_questions(students_data)
 
 def filter_questions_choose_random_option(questions : List[Question]):
     random.shuffle(questions)
