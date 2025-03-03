@@ -123,7 +123,7 @@ def convert_to_series(student: Student) -> pd.Series:
 
     return pd.Series(data)
 
-def get_total_mark_row(serial_tests: List[SerialTest]):
+def get_total_mark_row(serial_tests: List[SerialTest], assignments: List[SerialTest]):
     data = {
         "reg_no": "",
         "section": "",
@@ -134,6 +134,11 @@ def get_total_mark_row(serial_tests: List[SerialTest]):
             data[get_question_key(question, serial_test)] = question.total_mark
         for co in serial_test.co:
             data[get_co_key(co, serial_test)] = co.total_mark
+    for assignment in assignments:
+        for question in assignment.questions:
+            data[get_question_key(question, assignment, False)] = question.total_mark
+        for co in assignment.co:
+            data[get_co_key(co, assignment, False)] = co.total_mark
     return pd.Series(data)
 
 def populate_student_co_marks(questions: List[Question], co: Co, serial_test: bool = True):
@@ -176,7 +181,7 @@ student_data_json = [student.model_dump() for student in student_data]
 f.write(json.dumps(student_data_json[:45], indent=4))
 f.close()
 
-df = pd.DataFrame([get_total_mark_row(student_data[0].serial_tests)]+[convert_to_series(student) for student in student_data])
+df = pd.DataFrame([get_total_mark_row(student_data[0].serial_tests, student_data[0].assignments)]+[convert_to_series(student) for student in student_data])
 merge_subjectdetails_studentdata(subject_details, df, "merged_excel.xlsx")
 df.to_excel("student_data.xlsx", index=False)
 

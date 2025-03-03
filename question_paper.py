@@ -2,6 +2,8 @@ import random
 from models import *
 from copy import deepcopy
 from test import *
+from collections import defaultdict
+
 
 def generate_questions(co_marks_splitUp, is_serialtest):
     co_marks_splitUp_copy = deepcopy(co_marks_splitUp)
@@ -53,6 +55,8 @@ def generate_questions(co_marks_splitUp, is_serialtest):
     # Sort questions by marks in ascending order
     questions_sorted = sorted(questions, key=lambda x: x["marks"])
     
+    questions_sorted = group_and_sort_questions(questions_sorted)
+    
     # Assign question numbers sequentially
     question_no = 1
     for i in range(len(questions_sorted)):
@@ -61,9 +65,27 @@ def generate_questions(co_marks_splitUp, is_serialtest):
         else:
             questions_sorted[i]["no"] = question_no
             question_no += 1 
+    
     test_question_paper(questions_sorted,co_marks_splitUp_copy)
     return questions_sorted
 
+def group_and_sort_questions(questions_sorted):
+    grouped_questions = defaultdict(list)
+    
+    # Group questions by marks
+    for question in questions_sorted:
+        grouped_questions[question["marks"]].append(question)
+    
+    # Sort each group by CO number
+    for mark in grouped_questions:
+        grouped_questions[mark] = sorted(grouped_questions[mark], key=lambda x: int(x["co"]))
+    
+    # Convert to sorted list
+    sorted_grouped_list = []
+    for mark in sorted(grouped_questions.keys()):
+        sorted_grouped_list.extend(grouped_questions[mark])
+    
+    return sorted_grouped_list
 
 if __name__ == "__main__":
     co_marks_splitUp = [
