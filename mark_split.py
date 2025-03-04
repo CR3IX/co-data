@@ -50,16 +50,18 @@ def generate_attainment_mark(attainment_file_path, file_name):
 
         return [filtered_question for filtered_question in filtered_questions if filtered_question.obtained_mark != filtered_question.total_mark]
 
-    def distribute_marks_random(questions: List[Question], marks_to_be_distributed: int, correct_strictly: bool = True):
+    def distribute_marks_random(questions: List[Question], marks_to_be_distributed: int, co: Co, student: Student, correct_strictly: bool = True):
         buffer_questions = []
         while marks_to_be_distributed > 0:
 
             if len(questions) == 0:
                 if correct_strictly and len(buffer_questions) > 0:
-                    distribute_marks_random(buffer_questions, marks_to_be_distributed, False)
+                    distribute_marks_random(buffer_questions, marks_to_be_distributed, co, student, False)
                     return
                 else:
-                    raise Exception("No questions left for CO", marks_to_be_distributed)
+                    raise Exception(f"""No questions left for CO {co.num} for student {student.reg_no} {student.name} {marks_to_be_distributed}
+                                    {co.obtained_mark}
+                                    """)
 
             random_question = random.choice(questions)
 
@@ -147,7 +149,7 @@ def generate_attainment_mark(attainment_file_path, file_name):
                 data[get_co_key(co, assignment, False)] = co.total_mark
         return pd.Series(data)
 
-    def populate_student_co_marks(questions: List[Question], co: Co, serial_test: bool = True):
+    def populate_student_co_marks(questions: List[Question], co: Co, student: Student, serial_test: bool = True):
         co_questions = get_co_questions(questions, co)
 
         obtained_mark = co.obtained_mark
@@ -163,11 +165,11 @@ def generate_attainment_mark(attainment_file_path, file_name):
             )
             # distribute_marks_random(co_questions, co.obtained_mark, )
             
-            distribute_marks_random(part_b_c_questions, part_b_c_mark_weighted)
+            distribute_marks_random(part_b_c_questions, part_b_c_mark_weighted, co, student)
             obtained_mark -= part_b_c_mark_weighted
-            distribute_marks_random(part_a_questions, obtained_mark)
+            distribute_marks_random(part_a_questions, obtained_mark, co, student)
         else:
-            distribute_marks_random(co_questions, co.obtained_mark)
+            distribute_marks_random(co_questions, co.obtained_mark, co, student)
 
 
     for student in student_data:
@@ -176,14 +178,20 @@ def generate_attainment_mark(attainment_file_path, file_name):
                 if co and co.obtained_mark and co.obtained_mark > 0:
                     if co.total_mark == 0:
                         print(f"student {student.reg_no} {student.name} co {co.num} total mark is 0 serial test")
-                    populate_student_co_marks(serial_test.questions, co, True)
+
+                    co.obtained_mark = min(co.obtained_mark, co.total_mark)
+                
+                    populate_student_co_marks(serial_test.questions, co, student, True)
 
         for assignment in student.assignments:
             for co in assignment.co:
                 if co and co.obtained_mark and co.obtained_mark > 0:
                     if co.total_mark == 0:
                         print(f"student {student.reg_no} {student.name} co {co.num} total mark is 0 assignment")
-                    populate_student_co_marks(assignment.questions, co, False)
+
+                    co.obtained_mark = min(co.obtained_mark, co.total_mark)
+
+                    populate_student_co_marks(assignment.questions, co, student, False)
 
     f = open("temp.json", "w")
 
@@ -199,12 +207,13 @@ def generate_attainment_mark(attainment_file_path, file_name):
 threads = []
 attainment_folder_path = "THEORY"
 files = sorted(os.listdir(attainment_folder_path))
-for index,file_name in enumerate(files):
+for index,file_name in enumerate(files[2:3]):
     file_path = os.path.join("THEORY",file_name)
     print(file_path)
-    t = threading.Thread(target=generate_attainment_mark, args=(file_path, file_name))
-    threads.append(t)
-    t.start()
+    generate_attainment_mark(file_path, file_name)
+#     t = threading.Thread(target=generate_attainment_mark, args=(file_path, file_name))
+#     threads.append(t)
+#     t.start()
 
-for t in threads:
-    t.join()
+# for t in threads:
+#     t.join()

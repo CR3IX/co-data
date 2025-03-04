@@ -68,10 +68,10 @@ def test_question_paper(questions: List, co_marks_splitUp:List):
         
         print(f"CO {co_num}: Assigned = {assigned_marks}, Expected = {expected_marks} --> {status}")
     
-    # print("\n===== Questions Grouped by CO =====")
-    # for co, q_list in same_co_questions.items():
-    #     print(f"CO {co}:")
-    #     for q in q_list:
-    #         print(f"  - Q{q['no']} | Marks: {q['marks']} | Option: {q['option']}")
+    print("\n===== Questions Grouped by CO =====")
+    for co, q_list in same_co_questions.items():
+        print(f"CO {co}:")
+        for q in q_list:
+            print(f"  - Q{q['no']} | Marks: {q['marks']} | Option: {q['option']}")
     
     return co_marks_assigned
