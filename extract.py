@@ -8,7 +8,7 @@ student_data: List[Student] = []
 
 #verify these values everytime
 headers = ["Sno", "Reg. Number", "Section", "Name"]
-total_co = 5
+total_co = 6
 total_serial_tests = 3
 total_assignments = 2
 

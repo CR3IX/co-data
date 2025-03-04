@@ -80,6 +80,7 @@ def generate_questions(co_marks_splitUp, is_serialtest):
                         break
                 else:
                     print(f"co{co['num']} total mark {co['total_mark']} question mark {question_mark}")
+                    break
     
     assign_questions()
     questions_sorted = sorted(questions, key=lambda x: x["marks"]) 
@@ -100,12 +101,12 @@ def generate_questions(co_marks_splitUp, is_serialtest):
 
 if __name__ == "__main__":
     co_marks_splitUp = [
-        {"num": 1, "total_mark": 10},
-        {"num": 2, "total_mark": 10},
-        {"num": 3, "total_mark": 30},
+        {"num": 1, "total_mark": 50},
+        {"num": 2, "total_mark": 0},
+        {"num": 3, "total_mark": 0},
         {"num": 4, "total_mark": 0},
         {"num": 5, "total_mark": 0},
         {"num": 6, "total_mark": 0}
     ]
 
-    questions = generate_questions(co_marks_splitUp,False)
+    questions = generate_questions(co_marks_splitUp,True)
