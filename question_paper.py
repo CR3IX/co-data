@@ -97,8 +97,8 @@ def generate_questions(co_marks_splitUp, is_serialtest):
 
 if __name__ == "__main__":
     co_marks_splitUp = [
-        {"num": 1, "total_mark": 16},
-        {"num": 2, "total_mark": 4},
+        {"num": 1, "total_mark": 10},
+        {"num": 2, "total_mark": 10},
         {"num": 3, "total_mark": 30},
         {"num": 4, "total_mark": 0},
         {"num": 5, "total_mark": 0},
