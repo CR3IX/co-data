@@ -5,7 +5,7 @@ import os
 import threading
 from excel import *
 
-def generate_attainment_mark(attainment_file_path):
+def generate_attainment_mark(attainment_file_path, file_name):
 
     df = pd.read_excel(attainment_file_path, sheet_name='S2')
     subject_details, students_data = clean_header(df)
@@ -83,6 +83,8 @@ def generate_attainment_mark(attainment_file_path):
 
 
     def get_percentage(total_mark: int, obtained_mark: int):
+        if total_mark == 0:
+            return 0
         return (obtained_mark / total_mark) * 100
 
 
@@ -172,11 +174,15 @@ def generate_attainment_mark(attainment_file_path):
         for serial_test in student.serial_tests:
             for co in serial_test.co:
                 if co and co.obtained_mark and co.obtained_mark > 0:
+                    if co.total_mark == 0:
+                        print(f"student {student.reg_no} {student.name} co {co.num} total mark is 0 serial test")
                     populate_student_co_marks(serial_test.questions, co, True)
 
         for assignment in student.assignments:
             for co in assignment.co:
                 if co and co.obtained_mark and co.obtained_mark > 0:
+                    if co.total_mark == 0:
+                        print(f"student {student.reg_no} {student.name} co {co.num} total mark is 0 assignment")
                     populate_student_co_marks(assignment.questions, co, False)
 
     f = open("temp.json", "w")
@@ -186,15 +192,17 @@ def generate_attainment_mark(attainment_file_path):
     f.close()
 
     df = pd.DataFrame([get_total_mark_row(student_data[0].serial_tests, student_data[0].assignments)]+[convert_to_series(student) for student in student_data])
-    merge_subjectdetails_studentdata(subject_details, df, f"Question {attainment_file_path[:-4]}.xlsx")
+    merge_subjectdetails_studentdata(subject_details, df, f"Question {file_name[:-4]}.xlsx")
 
     test_student_data(student_data)
     
 threads = []
 attainment_folder_path = "THEORY"
-for index,file_name in enumerate(sorted(os.listdir(attainment_folder_path))):
+files = sorted(os.listdir(attainment_folder_path))
+for index,file_name in enumerate(files):
     file_path = os.path.join("THEORY",file_name)
-    t = threading.Thread(target=generate_attainment_mark, args=(file_path,))
+    print(file_path)
+    t = threading.Thread(target=generate_attainment_mark, args=(file_path, file_name))
     threads.append(t)
     t.start()
 

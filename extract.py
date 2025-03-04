@@ -34,7 +34,7 @@ def get_total_mark_co(df: pd.DataFrame, index: int, serial_test : bool = True):
 
 def populate_student_data(df: pd.DataFrame):
     for index, row in df.iterrows():
-        if index == 0 or pd.isna(row[headers[1]]):
+        if index == 0 or pd.isna(row[headers[1]]) or row[headers[1]] == "" or int(row[headers[1]]) == 0:
             continue
         reg_no = str(int(row[headers[1]]))
         section = str(row[headers[2]])
@@ -116,5 +116,12 @@ def populate_student_data_and_questions(df: pd.DataFrame):
 
     for i in range(len(student_data[0].assignments)):
         populate_questions_in_serial_test(assignment_qp, i, False)
+
+    lst = [
+        student.model_dump() for student in student_data
+    ]
+    with open("student_data.json", "w") as f:
+        json.dump(lst, f, indent=4)
+    
 
     return student_data
