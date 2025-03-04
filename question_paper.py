@@ -48,6 +48,7 @@ def generate_questions(co_marks_splitUp, is_serialtest):
         question_index = 0
         
         while any(co["total_mark"] > 0 for co in co_marks_sorted) and question_index < len(question_cycle):
+            print(f"{any(co["total_mark"] > 0 for co in co_marks_sorted)}")
             for co in co_marks_sorted:
                 if co["total_mark"] <= 0:
                     continue
@@ -77,6 +78,8 @@ def generate_questions(co_marks_splitUp, is_serialtest):
                     question_index += 1
                     if question_index >= len(question_cycle):
                         break
+                else:
+                    print(f"co{co['num']} total mark {co['total_mark']} question mark {question_mark}")
     
     assign_questions()
     questions_sorted = sorted(questions, key=lambda x: x["marks"]) 

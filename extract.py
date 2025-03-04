@@ -8,7 +8,7 @@ student_data: List[Student] = []
 
 #verify these values everytime
 headers = ["Sno", "Reg. Number", "Section", "Name"]
-total_co = 6
+total_co = 5
 total_serial_tests = 3
 total_assignments = 2
 
@@ -58,9 +58,9 @@ def populate_student_data(df: pd.DataFrame):
                 col_num += 1
 
             serial_tests = [SerialTest(
-                num=i // 6 + 1,
-                co=cos[i:i + 6]
-            ) for i in range(0, len(cos), 6)]
+                num=i // total_co + 1,
+                co=cos[i:i + total_co]
+            ) for i in range(0, len(cos), total_co)]
             
             cos = []
             col_num = 0
@@ -74,9 +74,9 @@ def populate_student_data(df: pd.DataFrame):
                 col_num += 1
 
             assignments = [SerialTest(
-                num=i // 6 + 1,
-                co=cos[i:i + 6]
-            ) for i in range(0, len(cos), 6)]
+                num=i // total_co + 1,
+                co=cos[i:i + total_co]
+            ) for i in range(0, len(cos), total_co)]
 
             student = Student(
                 reg_no=reg_no,
@@ -103,6 +103,12 @@ def populate_questions_in_serial_test(qp, serial_test_index: int, serial_test : 
 
 def populate_student_data_and_questions(df: pd.DataFrame):
     populate_student_data(df)
+
+    with open("student_data.json", "w") as f:
+        json.dump({"questions": [
+            [co.model_dump() for co in serial_test.co]
+         for serial_test in student_data[0].serial_tests]}, f, indent=4)
+
     qp = {"questions": [generate_questions(
             [co.model_dump() for co in serial_test.co], True
         ) for serial_test in student_data[0].serial_tests]}
