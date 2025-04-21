@@ -4,6 +4,7 @@ from copy import deepcopy
 from test import *
 from collections import defaultdict
 import json
+from qp_config import *
 
 def group_and_sort_questions(questions_sorted):
     grouped_questions = defaultdict(list)
@@ -23,20 +24,26 @@ def group_and_sort_questions(questions_sorted):
     
     return sorted_grouped_list
 
-def generate_questions(co_marks_splitUp, is_serialtest):
-    co_marks_splitUp_copy = deepcopy(co_marks_splitUp)
+def generate_questions(co_marks_splitUp, is_serialtest, serial_test_num):
+    co_marks_splitUp_copy = deepcopy(co_marks_splitUp)    
     
     if is_serialtest:
         question_splitUp = [
             {"mark": 12, "no_of_questions": 1},
-            {"mark": 10, "no_of_questions": 2},
+            {"mark": 10, "no_of_questions": 3},
             {"mark": 2, "no_of_questions": 9}
         ]
     else:
-        question_splitUp = [
-            {"mark": 10, "no_of_questions": 3},
-            {"mark": 2, "no_of_questions": 10}
-        ]
+        if all(co["total_mark"] % 5 == 0 for co in co_marks_splitUp):
+            question_splitUp = [
+                {"mark": 15, "no_of_questions": 1},
+                {"mark": 5, "no_of_questions": 7}
+            ]
+        else:
+            question_splitUp = [
+                {"mark": 10, "no_of_questions": 3},
+                {"mark": 2, "no_of_questions": 10}
+            ]
     
     questions = []
     
@@ -79,10 +86,13 @@ def generate_questions(co_marks_splitUp, is_serialtest):
                     if question_index >= len(question_cycle):
                         break
                 else:
-                    print(f"co{co['num']} total mark {co['total_mark']} question mark {question_mark}")
+                    print(f"co{co['num']} total mark {co['total_mark']} question mark {question_mark} is_serialtest {is_serialtest}")
                     break
     
-    assign_questions()
+    if serial_test_num == 3:
+            questions = created_questions
+    else:
+        assign_questions()
     questions_sorted = sorted(questions, key=lambda x: x["marks"]) 
     questions_sorted = group_and_sort_questions(questions_sorted)
     
@@ -94,7 +104,9 @@ def generate_questions(co_marks_splitUp, is_serialtest):
         else:
             questions_sorted[i]["no"] = question_no
             question_no += 1 
-    
+    if serial_test_num == 3:
+        questions_sorted = created_questions
+    print("testing serial test:", serial_test_num)
     test_question_paper(questions_sorted, co_marks_splitUp_copy)
     return questions_sorted
 

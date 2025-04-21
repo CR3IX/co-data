@@ -158,11 +158,18 @@ def generate_attainment_mark(attainment_file_path, file_name):
         part_a_questions = get_part_a_questions(co_questions)
 
         if serial_test:
-            obtained_percentage = get_percentage(co.total_mark, co.obtained_mark)
-            part_b_c_mark_weighted = get_mark_with_percentage(
-                get_total_questions_mark(part_b_c_questions),
-                min(obtained_percentage + random.randint(0,5), 100)
-            )
+            if obtained_mark <= 1:
+                obtained_percentage = get_percentage(co.total_mark, co.obtained_mark)
+                part_b_c_mark_weighted = get_mark_with_percentage(
+                    get_total_questions_mark(part_b_c_questions),
+                    min(obtained_percentage - random.randint(0,5), 0)
+                )
+            else:
+                obtained_percentage = get_percentage(co.total_mark, co.obtained_mark)
+                part_b_c_mark_weighted = get_mark_with_percentage(
+                    get_total_questions_mark(part_b_c_questions),
+                    min(obtained_percentage + random.randint(0,5), 100)
+                )
             # distribute_marks_random(co_questions, co.obtained_mark, )
             
             distribute_marks_random(part_b_c_questions, part_b_c_mark_weighted, co, student)
@@ -177,6 +184,7 @@ def generate_attainment_mark(attainment_file_path, file_name):
             for co in serial_test.co:
                 if co and co.obtained_mark and co.obtained_mark > 0:
                     if co.total_mark == 0:
+                        raise Exception(f"student {student.reg_no} {student.name} co {co.num} total mark is 0 serial test")
                         print(f"student {student.reg_no} {student.name} co {co.num} total mark is 0 serial test")
 
                     co.obtained_mark = min(co.obtained_mark, co.total_mark)
@@ -187,6 +195,7 @@ def generate_attainment_mark(attainment_file_path, file_name):
             for co in assignment.co:
                 if co and co.obtained_mark and co.obtained_mark > 0:
                     if co.total_mark == 0:
+                        raise Exception(f"student {student.reg_no} {student.name} co {co.num} total mark is 0 assignment")
                         print(f"student {student.reg_no} {student.name} co {co.num} total mark is 0 assignment")
 
                     co.obtained_mark = min(co.obtained_mark, co.total_mark)
@@ -200,16 +209,18 @@ def generate_attainment_mark(attainment_file_path, file_name):
     f.close()
 
     df = pd.DataFrame([get_total_mark_row(student_data[0].serial_tests, student_data[0].assignments)]+[convert_to_series(student) for student in student_data])
+    test_student_data(student_data)
     merge_subjectdetails_studentdata(subject_details, df, f"Question {file_name[:-4]}.xlsx")
 
-    test_student_data(student_data)
+    
     
 threads = []
 attainment_folder_path = "THEORY"
 files = sorted(os.listdir(attainment_folder_path))
-for index,file_name in enumerate(files[2:3]):
+print(files[15:16])
+for index,file_name in enumerate(files[15:16]):
     file_path = os.path.join("THEORY",file_name)
-    print(file_path)
+    print(file_path,index)
     generate_attainment_mark(file_path, file_name)
 #     t = threading.Thread(target=generate_attainment_mark, args=(file_path, file_name))
 #     threads.append(t)

@@ -110,11 +110,11 @@ def populate_student_data_and_questions(df: pd.DataFrame):
          for serial_test in student_data[0].serial_tests]}, f, indent=4)
 
     qp = {"questions": [generate_questions(
-            [co.model_dump() for co in serial_test.co], True
+            [co.model_dump() for co in serial_test.co], True, serial_test.num
         ) for serial_test in student_data[0].serial_tests]}
 
     assignment_qp = {"questions": [generate_questions(
-            [co.model_dump() for co in serial_test.co], False
+            [co.model_dump() for co in serial_test.co], False , None
         ) for serial_test in student_data[0].assignments]}
 
     for i in range(len(student_data[0].serial_tests)):

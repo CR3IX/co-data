@@ -24,10 +24,10 @@ def check_co_wise_total(student: Student, cos: List[Co], questions: List[Questio
       co_questions = get_questions_with_co(questions, co)
 
       if not check_obtained_marks(co_questions, co):
-        print(f"obtained_mark not matched {student.name} {'serial_test' if serial_test else 'assignment'}{num} co{co.num}")
+        raise Exception(f"obtained_mark not matched {student.name} {'serial_test' if serial_test else 'assignment'}{num} co{co.num}")
 
       if not check_total_marks(co_questions, co):
-        print(f"total_mark not matched {student.name} {'serial_test' if serial_test else 'assignment'}{num} co{co.num}")
+        raise Exception(f"total_mark not matched {student.name} {'serial_test' if serial_test else 'assignment'}{num} co{co.num}")
 
     for question in questions:
       if question.obtained_mark > question.total_mark:
