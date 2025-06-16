@@ -37,9 +37,11 @@ def test_student_data(student_data):
   for student in student_data:
     for serial_test in student.serial_tests:
       check_co_wise_total(student, serial_test.co, serial_test.questions, serial_test.num, True)
-
+      #continue
+    
     for assignment in student.assignments:
       check_co_wise_total(student, assignment.co, assignment.questions, assignment.num, False)
+      #continue
   
 
 def test_question_paper(questions: List, co_marks_splitUp:List):

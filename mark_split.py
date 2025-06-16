@@ -153,7 +153,6 @@ def generate_attainment_mark(attainment_file_path, file_name):
         co_questions = get_co_questions(questions, co)
 
         obtained_mark = co.obtained_mark
-        
         part_b_c_questions = get_part_b_c_questions(co_questions)
         part_a_questions = get_part_a_questions(co_questions)
 
@@ -168,7 +167,7 @@ def generate_attainment_mark(attainment_file_path, file_name):
                 obtained_percentage = get_percentage(co.total_mark, co.obtained_mark)
                 part_b_c_mark_weighted = get_mark_with_percentage(
                     get_total_questions_mark(part_b_c_questions),
-                    min(obtained_percentage + random.randint(0,5), 100)
+                    min(obtained_percentage + random.randint(0,2), 100)
                 )
             # distribute_marks_random(co_questions, co.obtained_mark, )
             
@@ -217,8 +216,8 @@ def generate_attainment_mark(attainment_file_path, file_name):
 threads = []
 attainment_folder_path = "THEORY"
 files = sorted(os.listdir(attainment_folder_path))
-print(files[15:16])
-for index,file_name in enumerate(files[15:16]):
+print(files[3:4])
+for index,file_name in enumerate(files[3:4]):
     file_path = os.path.join("THEORY",file_name)
     print(file_path,index)
     generate_attainment_mark(file_path, file_name)

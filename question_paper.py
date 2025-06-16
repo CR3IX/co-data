@@ -30,7 +30,7 @@ def generate_questions(co_marks_splitUp, is_serialtest, serial_test_num):
     if is_serialtest:
         question_splitUp = [
             {"mark": 12, "no_of_questions": 1},
-            {"mark": 10, "no_of_questions": 3},
+            {"mark": 10, "no_of_questions": 2},
             {"mark": 2, "no_of_questions": 9}
         ]
     else:
@@ -89,10 +89,8 @@ def generate_questions(co_marks_splitUp, is_serialtest, serial_test_num):
                     print(f"co{co['num']} total mark {co['total_mark']} question mark {question_mark} is_serialtest {is_serialtest}")
                     break
     
-    if serial_test_num == 3:
-            questions = created_questions
-    else:
-        assign_questions()
+
+    assign_questions()
     questions_sorted = sorted(questions, key=lambda x: x["marks"]) 
     questions_sorted = group_and_sort_questions(questions_sorted)
     
@@ -104,8 +102,8 @@ def generate_questions(co_marks_splitUp, is_serialtest, serial_test_num):
         else:
             questions_sorted[i]["no"] = question_no
             question_no += 1 
-    if serial_test_num == 3:
-        questions_sorted = created_questions
+    # if serial_test_num == 3:
+    #     questions_sorted = created_questions
     print("testing serial test:", serial_test_num)
     test_question_paper(questions_sorted, co_marks_splitUp_copy)
     return questions_sorted
